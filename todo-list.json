@@ -1,0 +1,22 @@
+[
+	{
+		"todoItem": "Buy groceries",
+		"dateAdded": "6/23/23",
+		"priority": 3
+	},
+	{
+		"todoItem": "Finish project report",
+		"dateAdded": "1/23/15",
+		"priority": 2
+	},
+	{
+		"todoItem": "Prepare for meeting",
+		"dateAdded": "4/24/20",
+		"priority": 1
+	},
+	{
+		"todoItem": "Call doctor",
+		"dateAdded": "2/4/52",
+		"priority": 4
+	}
+]
