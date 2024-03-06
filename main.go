@@ -16,44 +16,54 @@ type Todo struct {
 }
 
 func main() {
-	data, err := os.ReadFile("todo-list.json")
-	if err != nil {
-		fmt.Println("Could not read content from file")
-		return
-	}
-
-	var todoInfo []Todo
-	unmarshErr := json.Unmarshal(data, &todoInfo)
-	if unmarshErr != nil {
-		log.Fatal(unmarshErr)
-	}
-	var newItem Todo
-	var t time.Time = time.Now()
+	var todo Todo
+	var timestamp time.Time = time.Now()
+	var todoList []Todo = getFileJSON()
 
 	fmt.Println("Enter a todo list item:")
 
 	reader := bufio.NewReader(os.Stdin)
 	strInput, err := reader.ReadString('\n')
 	if err != nil {
-		fmt.Printf("Reader error: %s", err)
+		log.Fatalf("Reader error: %s\n", err)
 	}
 
-	newItem.Item = strInput
-	newItem.Date = t.Format(time.Stamp)
-	newItem.Priority = 69
+	todo.Item = strInput
+	todo.Date = timestamp.Format(time.Stamp)
+	todo.Priority = 69
 
-	todoInfo = append(todoInfo, newItem)
+	todoList = append(todoList, todo)
 
-	byteInfo, err := json.MarshalIndent(todoInfo, "", "\t")
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = os.WriteFile("todo-list.json", byteInfo, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
+	pushFileJSON(todoList)
 
-	for _, t := range todoInfo {
+	for _, t := range todoList {
 		fmt.Println(t.Item)
+	}
+}
+
+func getFileJSON() []Todo {
+	var list []Todo
+
+	fileData, err := os.ReadFile("todo-list.json")
+	if err != nil {
+		log.Fatalf("ReadFile Error: %s\n", err)
+	}
+
+	unmarshErr := json.Unmarshal(fileData, &list)
+	if unmarshErr != nil {
+		log.Fatalf("Unmarshal Error: %s\n", unmarshErr)
+	}
+
+	return list
+}
+
+func pushFileJSON(list []Todo) {
+	listAsByte, err := json.MarshalIndent(list, "", "\t")
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = os.WriteFile("todo-list.json", listAsByte, 0644)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
