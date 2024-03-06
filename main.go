@@ -20,24 +20,42 @@ func main() {
 	var timestamp time.Time = time.Now()
 	var todoList []Todo = getFileJSON()
 
-	fmt.Println("Enter a todo list item:")
+	//Print commands for executable
+	printInstructions()
 
-	reader := bufio.NewReader(os.Stdin)
-	strInput, err := reader.ReadString('\n')
-	if err != nil {
-		log.Fatalf("Reader error: %s\n", err)
-	}
+	args := os.Args
+	if len(args) > 1 {
+		switch args[1] {
+		case "shw":
+			displayList()
+		case "add":
+			fmt.Println(args[2])
+		case "del":
+			fmt.Println(args[2])
+		}
+	} else {
+		//use this to be the default
+		//which would to just display the list
+		//displayList()
+		fmt.Println("Enter a todo list item:")
 
-	todo.Item = strInput
-	todo.Date = timestamp.Format(time.Stamp)
-	todo.Priority = 69
+		reader := bufio.NewReader(os.Stdin)
+		strInput, err := reader.ReadString('\n')
+		if err != nil {
+			log.Fatalf("Reader error: %s\n", err)
+		}
 
-	todoList = append(todoList, todo)
+		todo.Item = strInput
+		todo.Date = timestamp.Format(time.Stamp)
+		todo.Priority = 69
 
-	pushFileJSON(todoList)
+		todoList = append(todoList, todo)
 
-	for _, t := range todoList {
-		fmt.Println(t.Item)
+		pushFileJSON(todoList)
+
+		for _, t := range todoList {
+			fmt.Println(t.Item)
+		}
 	}
 }
 
