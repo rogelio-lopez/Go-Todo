@@ -1,2 +1,3 @@
-# Learning-Go
-Advent of code with Go and other challenges
+# Command line todo list
+
+Using this to learn Go
