@@ -5,10 +5,12 @@ import (
 )
 
 func printInstructions() {
-	fmt.Println("Welcome to Go-do")
-	fmt.Println("Usage: ./godo [add] [del] [shw]")
+	fmt.Println("Go-do Usage:")
+	fmt.Println("./godo [add] [del] [shw]")
 }
 
-func displayList() {
-	fmt.Println("this is a list")
+func displayList(list []Todo) {
+	for i, v := range list {
+		fmt.Printf("%-*d | %-*s | %-*d | %-*s |\n", 1, i, 30, v.Item, 1, v.Priority, 8, v.Date)
+	}
 }

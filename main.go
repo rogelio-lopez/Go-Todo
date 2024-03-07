@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -20,42 +21,47 @@ func main() {
 	var timestamp time.Time = time.Now()
 	var todoList []Todo = getFileJSON()
 
-	//Print commands for executable
-	printInstructions()
-
 	args := os.Args
 	if len(args) > 1 {
 		switch args[1] {
+
 		case "shw":
-			displayList()
+			displayList(todoList)
+
 		case "add":
-			fmt.Println(args[2])
+			todo.addTodoItem(args, timestamp)
+			todoList = append(todoList, todo)
+			pushFileJSON(todoList)
+
 		case "del":
 			fmt.Println(args[2])
+
+		default:
+			printInstructions()
 		}
 	} else {
-		//use this to be the default
-		//which would to just display the list
-		//displayList()
-		fmt.Println("Enter a todo list item:")
+		//havent done
+		displayList(todoList)
+	}
+}
 
-		reader := bufio.NewReader(os.Stdin)
-		strInput, err := reader.ReadString('\n')
-		if err != nil {
-			log.Fatalf("Reader error: %s\n", err)
-		}
+func (t *Todo) addTodoItem(args []string, timestamp time.Time) {
+	for i := 1; i < len(args); i++ {
+		t.Item += args[i] + " "
+	}
+	t.Date = timestamp.Format(time.Stamp)
 
-		todo.Item = strInput
-		todo.Date = timestamp.Format(time.Stamp)
-		todo.Priority = 69
+	fmt.Println("Priority [1-5]")
 
-		todoList = append(todoList, todo)
+	reader := bufio.NewReader(os.Stdin)
+	priority, err := reader.ReadString('\n')
+	if err != nil {
+		log.Fatalf("Reader error: %s\n", err)
+	}
 
-		pushFileJSON(todoList)
-
-		for _, t := range todoList {
-			fmt.Println(t.Item)
-		}
+	t.Priority, err = strconv.Atoi(priority)
+	if err != nil {
+		log.Fatalf("Strconv Error: %s\n", err)
 	}
 }
 
