@@ -1,22 +1,17 @@
 [
 	{
-		"todoItem": "Buy groceries",
-		"dateAdded": "6/23/23",
-		"priority": 3
-	},
-	{
-		"todoItem": "Finish project report",
-		"dateAdded": "1/23/15",
-		"priority": 2
-	},
-	{
-		"todoItem": "Prepare for meeting",
-		"dateAdded": "4/24/20",
+		"todoItem": "add Error checking when not adding a msg after add ",
+		"dateAdded": "Mar  8 06:50:01",
 		"priority": 1
 	},
 	{
-		"todoItem": "Call doctor",
-		"dateAdded": "2/4/52",
-		"priority": 4
+		"todoItem": "add order option by priority and date ",
+		"dateAdded": "Mar  8 06:51:24",
+		"priority": 1
+	},
+	{
+		"todoItem": "add option to skip priority ",
+		"dateAdded": "Mar  8 06:51:52",
+		"priority": 1
 	}
 ]

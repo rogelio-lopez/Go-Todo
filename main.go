@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -59,35 +58,8 @@ func (t *Todo) addTodoItem(args []string, timestamp time.Time) {
 		log.Fatalf("Reader error: %s\n", err)
 	}
 
-	t.Priority, err = strconv.Atoi(priority)
+	t.Priority, err = strconv.Atoi(priority[0:1])
 	if err != nil {
 		log.Fatalf("Strconv Error: %s\n", err)
-	}
-}
-
-func getFileJSON() []Todo {
-	var list []Todo
-
-	fileData, err := os.ReadFile("todo-list.json")
-	if err != nil {
-		log.Fatalf("ReadFile Error: %s\n", err)
-	}
-
-	unmarshErr := json.Unmarshal(fileData, &list)
-	if unmarshErr != nil {
-		log.Fatalf("Unmarshal Error: %s\n", unmarshErr)
-	}
-
-	return list
-}
-
-func pushFileJSON(list []Todo) {
-	listAsByte, err := json.MarshalIndent(list, "", "\t")
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = os.WriteFile("todo-list.json", listAsByte, 0644)
-	if err != nil {
-		log.Fatal(err)
 	}
 }
