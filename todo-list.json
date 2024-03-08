@@ -1,10 +1,5 @@
 [
 	{
-		"todoItem": "add Error checking when not adding a msg after add ",
-		"dateAdded": "Mar  8 06:50:01",
-		"priority": 1
-	},
-	{
 		"todoItem": "add order option by priority and date ",
 		"dateAdded": "Mar  8 06:51:24",
 		"priority": 1
@@ -12,6 +7,11 @@
 	{
 		"todoItem": "add option to skip priority ",
 		"dateAdded": "Mar  8 06:51:52",
+		"priority": 1
+	},
+	{
+		"todoItem": "add need to change json to store the username ",
+		"dateAdded": "Mar  8 10:17:39",
 		"priority": 1
 	}
 ]

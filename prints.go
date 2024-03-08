@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func printInstructions() {
@@ -9,25 +10,31 @@ func printInstructions() {
 	fmt.Println("./godo [add] [del] [shw]")
 }
 
-func displayList(todoList []Todo) {
+func printList(todoList []TodoItem, username string) {
 
 	if len(todoList) < 1 {
 		fmt.Println("Your todo list is empty ¯\\_(ツ)_/¯")
 		return
 	}
 
-	var largestItem int = 0
-	var largestDate int = 0
-
+	longestEntry, longestDate := 0, 0
 	for _, t := range todoList {
-		if len(t.Item) > largestItem {
-			largestItem = len(t.Item)
+		if len(t.Entry) > longestEntry {
+			longestEntry = len(t.Entry)
 		}
-		if len(t.Date) > largestDate {
-			largestDate = len(t.Date)
+		if len(t.Date) > longestDate {
+			longestDate = len(t.Date)
 		}
 	}
+
+	if username != "" {
+		fmt.Printf("%s Todo", username)
+	} else {
+		fmt.Println("My Todo")
+	}
+	fmt.Println(strings.Repeat("-", 15+longestEntry+longestDate))
 	for i, v := range todoList {
-		fmt.Printf("%-*d | %-*s | %-*d | %-*s |\n", 1, i+1, largestItem, v.Item, 1, v.Priority, largestDate, v.Date)
+		fmt.Printf("| %-*d | %-*s | %-*d | %-*s |\n", 1, i+1, longestEntry, v.Entry, 1, v.Priority, longestDate, v.Date)
 	}
+	fmt.Println(strings.Repeat("-", 15+longestEntry+longestDate))
 }
