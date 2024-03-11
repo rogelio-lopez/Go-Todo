@@ -2,51 +2,52 @@ package main
 
 import (
 	"os"
-	"time"
 )
 
-type TodoItem struct {
-	Entry    string `json:"todoItem"`
-	Date     string `json:"dateAdded"`
-	Priority int    `json:"priority"`
-}
-
 type Todo struct {
-	UserName string
-	List     []TodoItem
+	UserName string     `json:"username"`
+	List     []TodoItem `json:"list"`
+}
+type TodoItem struct {
+	Entry string `json:"todoItem"`
+	Date  string `json:"dateAdded"`
 }
 
 func main() {
-	var item TodoItem
-	var timestamp time.Time = time.Now()
 	var todo Todo
+	var todoItem TodoItem
 
-	todo.UserName = ""
-	todo.List = getFileJSON()
+	todo.getFileJSON()
 
 	args := os.Args
 	if len(args) > 1 {
 		switch args[1] {
 
 		case "shw":
-			printList(todo.List, todo.UserName)
+			todo.printList()
 
 		case "add":
-			item.addTodoItem(args, timestamp)
-			todo.List = append(todo.List, item)
-			pushFileJSON(todo.List)
+			todoItem.addTodoItem(args)
+			todo.List = append(todo.List, todoItem)
+			todo.pushFileJSON()
 
 		case "del":
 			todo.delTodoItem(args)
-			pushFileJSON(todo.List)
+			todo.pushFileJSON()
 
 		case "usr":
 			todo.addUser(args)
+			todo.pushFileJSON()
+
+		case "ordr":
+			todo.orderBy()
+			todo.pushFileJSON()
+
 		default:
 			printInstructions()
 		}
 	} else {
-		//havent done
-		printList(todo.List, todo.UserName)
+		printInstructions()
+		todo.printList()
 	}
 }
