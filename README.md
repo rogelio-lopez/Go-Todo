@@ -6,9 +6,11 @@ Go Todo CLI is a simple, yet powerful command-line interface (CLI) application w
 
 ## Features
 
-- **Add Task**: Easily add new tasks to your todo list with `./godo add <task description>`.
+- **Add Task**: Easily add new tasks to your todo list with `./godo add [-i] <task description>`.
 - **Delete Task**: Remove tasks from your list using `./godo del`.
-- **Show List**: View all your tasks with `./godo shw`.
+- **Show List**: View all your tasks with `./godo shw [specific #]`.
+- **Order List**: Order the list by importance `./godo ordr`.
+- **Change Username**: Change the name displayed on the list `./godo usr <New Name>`.
 
 ## Getting Started
 
