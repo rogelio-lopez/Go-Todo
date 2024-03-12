@@ -2,12 +2,8 @@
 	"username": "Roge",
 	"list": [
 		{
-			"todoItem": "add order option by priority and date",
-			"dateAdded": "Mar  8 06:51:24"
-		},
-		{
-			"todoItem": "* this is supposed to be important",
-			"dateAdded": "Mar 11 10:53:40"
+			"todoItem": "Add interactive deleting system",
+			"dateAdded": "Mar 12 08:32:17"
 		}
 	]
 }

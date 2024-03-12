@@ -59,11 +59,26 @@ func (t *Todo) addUser(args []string) {
 }
 
 func (t *Todo) orderBy() {
-	for i := 0; i < len(t.List); i++ {
-		//Something that keeps the position of top pointer / the important ones
-		entry := t.List[0].Entry
-		if entry[0:1] != "*" {
+	var listLen int = len(t.List)
+	var index int = 0
+
+	i := 0
+	for i < listLen {
+		entry := t.List[index].Entry
+
+		if i == 0 && entry[0:1] != "*" {
+			el := t.List[0]
+			t.List = t.List[1:]
+			t.List = append(t.List, el)
+
+		} else if entry[0:1] != "*" {
+			el := t.List[index]
+			newList := append(t.List[0:index], t.List[index+1:]...)
+			t.List = append(newList, el)
+		} else if entry[0:1] == "*" {
+			index++
 		}
+		i++
 	}
 }
 
