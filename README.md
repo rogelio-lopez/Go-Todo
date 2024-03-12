@@ -35,15 +35,31 @@ Go Todo CLI is a simple, yet powerful command-line interface (CLI) application w
 
 - To add a new task:
  ```
- ./godo add "Buy groceries"
+ ./godo add Buy groceries
+ ```
+- To an important task:
+ ```
+ ./godo add -i Very important task to do
  ```
 - To delete a task:
  ```
  ./godo del
  ```
+- To delete a specific task number:
+ ```
+ ./godo del 2
+ ```
 - To view all tasks:
  ```
  ./godo shw
+ ```
+- To order tasks by importance:
+ ```
+ ./godo ordr
+ ```
+- To change the name of the Todo list:
+ ```
+ ./godo usr NewName
  ```
 
 ## Contributing
