@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	"bufio"
 	"fmt"
 	"log"
 	"os"
@@ -13,19 +13,24 @@ import (
 /* Moodify List */
 func (t *TodoItem) addTodoItem(args []string) {
 	var timestamp time.Time = time.Now()
-	var entryArr []string = args[2:]
 	var entry string
 
-	if args[2] == "-i" {
-		entryArr = args[3:]
-		entry = "* "
+	if len(args) > 2 {
+		switch args[2] {
+		case "-i":
+			entry = "* "
+		}
 	}
-	for _, e := range entryArr {
-		entry += e + " "
-	}
-	entry = entry[0 : len(entry)-1]
 
-	t.Entry = entry
+	fmt.Printf("~ ")
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	err := scanner.Err()
+	if err != nil {
+		log.Fatalf("Scanner Error: %s\n", err)
+	}
+
+	t.Entry = entry + scanner.Text()
 	t.Date = timestamp.Format(time.Stamp)
 }
 
@@ -113,33 +118,4 @@ func (t *Todo) printList() {
 
 func printInstructions() {
 	fmt.Println("Go-do Usage: ./godo [add] [del] [shw]")
-}
-
-// Files
-func (t *Todo) getFileJSON() {
-	var info Todo
-
-	fileData, err := os.ReadFile("todo-list.json")
-	if err != nil {
-		log.Fatalf("ReadFile Error: %s\n", err)
-	}
-
-	unmarshErr := json.Unmarshal(fileData, &info)
-	if unmarshErr != nil {
-		log.Fatalf("Unmarshal Error: %s\n", unmarshErr)
-	}
-
-	t.UserName = info.UserName
-	t.List = info.List
-}
-
-func (t *Todo) pushFileJSON() {
-	listAsByte, err := json.MarshalIndent(t, "", "\t")
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = os.WriteFile("todo-list.json", listAsByte, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
 }
