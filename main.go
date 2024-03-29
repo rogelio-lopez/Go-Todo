@@ -4,50 +4,52 @@ import (
 	"os"
 )
 
-type Todo struct {
-	UserName string     `json:"username"`
-	List     []TodoItem `json:"list"`
+type DB struct {
+	Db_name  string `json:"Db_name"`
+	Db_lists []List `json:"Db_lists"`
 }
-type TodoItem struct {
-	Entry string `json:"todoItem"`
-	Date  string `json:"dateAdded"`
+type List struct {
+	List_name string  `json:"List_name"`
+	List      []Entry `json:"List"`
+}
+type Entry struct {
+	Entry     string `json:"todoItem"`
+	Date      string `json:"dateAdded"`
+	Important bool   `json:"important"`
 }
 
 func main() {
-	var todo Todo
-	var todoItem TodoItem
+	var db DB
+	var l List
+	var e Entry
 
-	todo.getFileJSON()
+	db.getFileJSON()
 
 	args := os.Args
 	if len(args) > 1 {
 		switch args[1] {
-
 		case "shw":
-			todo.printList()
-
+			l.printList()
 		case "add":
-			todoItem.addTodoItem(args)
-			todo.List = append(todo.List, todoItem)
-			todo.pushFileJSON()
-
+			e.addTodoItem(args)
+			l.List = append(l.List, e)
+			db.pushFileJSON()
 		case "del":
-			todo.delTodoItem(args)
-			todo.pushFileJSON()
-
-		case "usr":
-			todo.addUser(args)
-			todo.pushFileJSON()
-
+			l.delTodoItem(args)
+			db.pushFileJSON()
+			/*
+				case "usr":
+					l.addUser(args)
+					db.pushFileJSON()
+			*/
 		case "ordr":
-			todo.orderBy()
-			todo.pushFileJSON()
-
+			l.orderBy()
+			db.pushFileJSON()
 		default:
 			printInstructions()
 		}
 	} else {
 		printInstructions()
-		todo.printList()
+		//todo.printList()
 	}
 }

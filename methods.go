@@ -11,7 +11,7 @@ import (
 )
 
 /* Moodify List */
-func (t *TodoItem) addTodoItem(args []string) {
+func (t *Entry) addTodoItem(args []string) {
 	var timestamp time.Time = time.Now()
 	var entry string
 
@@ -34,7 +34,7 @@ func (t *TodoItem) addTodoItem(args []string) {
 	t.Date = timestamp.Format(time.Stamp)
 }
 
-func (t *Todo) delTodoItem(args []string) {
+func (t *List) delTodoItem(args []string) {
 	if len(args) < 3 {
 		t.List = t.List[1:len(t.List)]
 	} else {
@@ -55,15 +55,16 @@ func (t *Todo) delTodoItem(args []string) {
 	}
 }
 
-func (t *Todo) addUser(args []string) {
-	t.UserName = ""
-	for i := 2; i < len(args); i++ {
-		t.UserName += args[i] + " "
+/*
+	func (t *List) addUser(args []string) {
+		t.UserName = ""
+		for i := 2; i < len(args); i++ {
+			t.UserName += args[i] + " "
+		}
+		t.UserName = t.UserName[0 : len(t.UserName)-1]
 	}
-	t.UserName = t.UserName[0 : len(t.UserName)-1]
-}
-
-func (t *Todo) orderBy() {
+*/
+func (t *List) orderBy() {
 	var listLen int = len(t.List)
 	var index int = 0
 
@@ -88,7 +89,7 @@ func (t *Todo) orderBy() {
 }
 
 /* Prints */
-func (t *Todo) printList() {
+func (t *List) printList() {
 	longestEntry, longestDate := 0, 0
 	for _, t := range t.List {
 		if len(t.Entry) > longestEntry {
@@ -104,8 +105,8 @@ func (t *Todo) printList() {
 		return
 	}
 
-	if t.UserName != "" {
-		fmt.Printf("%s's Todo\n", t.UserName)
+	if t.List_name != "" {
+		fmt.Printf("%s's Todo\n", t.List_name)
 	} else {
 		fmt.Println("My Todo")
 	}
