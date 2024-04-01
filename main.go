@@ -9,10 +9,13 @@ type DB struct {
 	Db_lists []List `json:"Db_lists"`
 }
 type List struct {
-	List_name string  `json:"List_name"`
-	List      []Entry `json:"List"`
+	Index         uint    `json:"index"`
+	List_name     string  `json:"List_name"`
+	Last_modified string  `json:"Last_modified"`
+	List          []Entry `json:"List"`
 }
 type Entry struct {
+	Index     uint   `json:"index"`
 	Entry     string `json:"todoItem"`
 	Date      string `json:"dateAdded"`
 	Important bool   `json:"important"`
@@ -20,36 +23,46 @@ type Entry struct {
 
 func main() {
 	var db DB
-	var l List
-	var e Entry
+	var currentList List //this is how I'll keep track of the current list I'm working on - use index
+	var entry Entry
 
 	db.getFileJSON()
 
 	args := os.Args
 	if len(args) > 1 {
 		switch args[1] {
+
+		//DB Commands
+		case "db-name": // Change DB name
+			db.changeDbName()
+		case "db-shw": // Show table of lists
+			db.shwDB()
+		case "checkout": // Create/Switch lists
+			switch args[2] {
+			case "-d":
+			//delete
+			default:
+				//if it exists the switch current list to that
+				//if it doesnt, then create
+			}
+
+		//List Commands
 		case "shw":
-			l.printList()
+			currentList.shw()
 		case "add":
-			e.addTodoItem(args)
-			l.List = append(l.List, e)
+			entry.add(args)
+			currentList.List = append(currentList.List, entry)
 			db.pushFileJSON()
 		case "del":
-			l.delTodoItem(args)
+			currentList.delTodoItem(args)
 			db.pushFileJSON()
-			/*
-				case "usr":
-					l.addUser(args)
-					db.pushFileJSON()
-			*/
 		case "ordr":
-			l.orderBy()
+			currentList.orderBy()
 			db.pushFileJSON()
 		default:
 			printInstructions()
 		}
 	} else {
 		printInstructions()
-		//todo.printList()
 	}
 }

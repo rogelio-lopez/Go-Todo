@@ -13,8 +13,8 @@ func (db *DB) getFileJSON() {
 	var fileDb DB
 
 	if !fileExists("todo-db.json") {
-		fileDb = createDB()
-		fmt.Print(fileDb)
+		var fileDb DB = createDB()
+		fileDb.pushFileJSON()
 	}
 
 	fileData, err := os.ReadFile("todo-db.json")
@@ -36,7 +36,7 @@ func (db *DB) pushFileJSON() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = os.WriteFile("todo-list.json", listAsByte, 0644)
+	err = os.WriteFile("todo-db.json", listAsByte, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -48,7 +48,6 @@ func fileExists(path string) bool {
 }
 
 func createDB() DB {
-
 	file, err := os.Create("todo-db.json")
 	if err != nil {
 		log.Fatalf("Creeate file error: %s\n", err)
@@ -64,7 +63,14 @@ func createDB() DB {
 		log.Fatalln("Scanning Error in createDB()")
 	}
 	return DB{
-		Db_name:  scanner.Text(),
-		Db_lists: []List{},
+		Db_name: scanner.Text(),
+		Db_lists: []List{
+			{
+				Index:         1,
+				List_name:     "New List",
+				Last_modified: timestamp(),
+				List:          []Entry{},
+			},
+		},
 	}
 }
