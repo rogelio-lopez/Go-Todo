@@ -9,6 +9,63 @@ import (
 )
 
 // Create/Switch current list
+func (db *DB) checkout(args []string) {
+	if len(args) >= 3 {
+		switch args[2] {
+		case "-d":
+			db.delList(args)
+		default:
+			db.addList(args)
+		}
+	} else {
+		fmt.Printf("You're on list: %s\n", db.DB_CurrentList)
+	}
+}
+
+func (db *DB) delList(args []string) {
+	if len(args) >= 4 {
+
+	} else {
+		fmt.Println("Ya need to give me the name of the list to delte")
+	}
+}
+
+func (db *DB) addList(args []string) {
+	var name string = ""
+
+	for i, s := range args[2:] {
+		if i < 1 {
+			name = s
+		} else {
+			name = name + " " + s
+		}
+	}
+
+	if db.changeCurrentList(name) < 0 {
+		//create the list
+		var newList List
+		newList.Index = 2
+		newList.List_name = name
+		newList.Last_modified = timestamp()
+		newList.List = []Entry{}
+
+		db.Db_lists = append(db.Db_lists, newList)
+		db.pushFileJSON()
+	} else {
+		db.changeCurrentList(name)
+	}
+}
+
+/* -------> working on this */
+func (db *DB) changeCurrentList(listName string) int {
+	for i, l := range db.Db_lists {
+		if l.List_name == listName {
+			db.DB_CurrentList = listName
+			return i
+		}
+	
+	return -1
+}
 
 // Delete List
 

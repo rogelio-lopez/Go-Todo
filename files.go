@@ -28,6 +28,7 @@ func (db *DB) getFileJSON() {
 	}
 
 	db.Db_name = fileDb.Db_name
+	db.DB_CurrentList = fileDb.DB_CurrentList
 	db.Db_lists = fileDb.Db_lists
 }
 
@@ -63,7 +64,8 @@ func createDB() DB {
 		log.Fatalln("Scanning Error in createDB()")
 	}
 	return DB{
-		Db_name: scanner.Text(),
+		Db_name:        scanner.Text(),
+		DB_CurrentList: "New List",
 		Db_lists: []List{
 			{
 				Index:         1,

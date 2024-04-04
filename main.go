@@ -5,8 +5,9 @@ import (
 )
 
 type DB struct {
-	Db_name  string `json:"Db_name"`
-	Db_lists []List `json:"Db_lists"`
+	Db_name        string `json:"Db_name"`
+	DB_CurrentList string `json:"DB_CurrentList"`
+	Db_lists       []List `json:"Db_lists"`
 }
 type List struct {
 	Index         uint    `json:"index"`
@@ -38,13 +39,7 @@ func main() {
 		case "db-shw": // Show table of lists
 			db.shwDB()
 		case "checkout": // Create/Switch lists
-			switch args[2] {
-			case "-d":
-			//delete
-			default:
-				//if it exists the switch current list to that
-				//if it doesnt, then create
-			}
+			db.checkout(args)
 
 		//List Commands
 		case "shw":
