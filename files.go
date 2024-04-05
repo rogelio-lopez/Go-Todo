@@ -9,7 +9,7 @@ import (
 )
 
 // Files
-func (db *DB) getFileJSON() {
+func getFileJSON() DB {
 	var fileDb DB
 
 	if !fileExists("todo-db.json") {
@@ -27,9 +27,7 @@ func (db *DB) getFileJSON() {
 		log.Fatalf("Unmarshal Error: %s\n", unmarshErr)
 	}
 
-	db.Db_name = fileDb.Db_name
-	db.DB_CurrentList = fileDb.DB_CurrentList
-	db.Db_lists = fileDb.Db_lists
+	return fileDb
 }
 
 func (db *DB) pushFileJSON() {
@@ -64,11 +62,14 @@ func createDB() DB {
 		log.Fatalln("Scanning Error in createDB()")
 	}
 	return DB{
-		Db_name:        scanner.Text(),
-		DB_CurrentList: "New List",
+		Db_name: scanner.Text(),
+		DB_CurrentList: CurrentList{
+			Name:  "New List",
+			Index: 0,
+		},
 		Db_lists: []List{
 			{
-				Index:         1,
+				Index:         0,
 				List_name:     "New List",
 				Last_modified: timestamp(),
 				List:          []Entry{},

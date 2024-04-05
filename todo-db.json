@@ -1,23 +1,20 @@
 {
-	"Db_name": "Roge's DB",
-	"DB_CurrentList": "New List",
+	"Db_name": "Roge DB New",
+	"DB_CurrentList": {
+		"index": 0,
+		"name": "New List"
+	},
 	"Db_lists": [
 		{
-			"index": 1,
+			"index": 0,
 			"List_name": "New List",
-			"Last_modified": "Apr  3 17:22:40",
+			"Last_modified": "Apr  5 10:13:14",
 			"List": []
 		},
 		{
-			"index": 2,
-			"List_name": "new new",
-			"Last_modified": "Apr  4 14:31:39",
-			"List": []
-		},
-		{
-			"index": 2,
-			"List_name": "new2",
-			"Last_modified": "Apr  4 14:33:00",
+			"index": 1,
+			"List_name": "blah blah",
+			"Last_modified": "Apr  5 10:30:31",
 			"List": []
 		}
 	]
