@@ -1,20 +1,14 @@
 {
-	"Db_name": "Roge DB New",
-	"DB_CurrentList": {
+	"DbName": "New DBDB",
+	"ThisList": {
 		"index": 0,
 		"name": "New List"
 	},
-	"Db_lists": [
+	"ListArr": [
 		{
-			"index": 0,
-			"List_name": "New List",
-			"Last_modified": "Apr  5 10:13:14",
-			"List": []
-		},
-		{
-			"index": 1,
-			"List_name": "blah blah",
-			"Last_modified": "Apr  5 10:30:31",
+			"Index": 0,
+			"ListName": "New List",
+			"LastModified": "Apr  6 12:50:36",
 			"List": []
 		}
 	]

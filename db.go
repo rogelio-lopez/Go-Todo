@@ -17,7 +17,7 @@ func (db *DB) changeDbName() {
 		log.Fatalf("Change DB name error: %s", scanner.Err())
 	}
 
-	db.Db_name = scanner.Text()
+	db.DbName = scanner.Text()
 	db.pushFileJSON()
 }
 
@@ -38,10 +38,35 @@ func (db *DB) checkout(args []string) {
 func (db *DB) delList(args []string) {
 	if len(args) >= 4 {
 		var listName = argText(args[3:])
-		// <-------- WORKING ON THIS NEXT
+
+		//Handle current list backup if deleted
+		//reassign indexes when deleting
+
+		for i, l := range db.ListArr {
+			if listName == l.ListName {
+
+				if len(db.ListArr) < 2 {
+					db.ListArr = []List{}
+
+				} else if i == 0 {
+					db.ListArr = db.ListArr[1:]
+				} else if i == len(db.ListArr) {
+					db.ListArr = db.ListArr[0 : len(db.ListArr)-1]
+				} else {
+					//delete list
+					first := db.ListArr[0:i]
+					fmt.Println(first)
+					second := db.ListArr[i+1:]
+					fmt.Println(second)
+
+					db.ListArr = append(first, second...)
+				}
+			}
+		}
 	} else {
 		fmt.Println("Ya need to give me the name of the list to delte")
 	}
+	db.pushFileJSON()
 }
 
 func (db *DB) addList(args []string) {
@@ -50,21 +75,21 @@ func (db *DB) addList(args []string) {
 	// Create new list if name != a list name
 	if db.changeCurrentList(listName) < 0 {
 		var newList List
-		newList.Index = uint(len(db.Db_lists))
-		newList.List_name = listName
-		newList.Last_modified = timestamp()
+		newList.Index = uint(len(db.ListArr))
+		newList.ListName = listName
+		newList.LastModified = timestamp()
 		newList.List = []Entry{}
 
-		db.Db_lists = append(db.Db_lists, newList)
+		db.ListArr = append(db.ListArr, newList)
 		db.pushFileJSON()
 	}
 }
 
 func (db *DB) changeCurrentList(listName string) int {
-	for i, l := range db.Db_lists {
-		if l.List_name == listName {
-			db.DB_CurrentList.Name = listName
-			db.DB_CurrentList.Index = uint(i)
+	for i, l := range db.ListArr {
+		if l.ListName == listName {
+			db.ThisList.Name = listName
+			db.ThisList.Index = uint(i)
 			db.pushFileJSON()
 			return i
 		}
@@ -75,36 +100,36 @@ func (db *DB) changeCurrentList(listName string) int {
 // Show a table of available lists
 func shwDB(db DB) {
 	longestName, longestDate := 0, 0
-	for i, l := range db.Db_lists {
-		if len(l.List_name) > longestName {
-			if i == int(db.DB_CurrentList.Index) {
-				longestName = len(l.List_name) + 3
+	for i, l := range db.ListArr {
+		if len(l.ListName) > longestName {
+			if i == int(db.ThisList.Index) {
+				longestName = len(l.ListName) + 3
 			} else {
-				longestName = len(l.List_name)
+				longestName = len(l.ListName)
 			}
 		}
-		if len(l.Last_modified) > longestDate {
-			longestDate = len(l.Last_modified)
+		if len(l.LastModified) > longestDate {
+			longestDate = len(l.LastModified)
 		}
 	}
 
-	if len(db.Db_lists) < 1 {
+	if len(db.ListArr) < 1 {
 		fmt.Println("Your DB is empty ¯\\_(ツ)_/¯")
 		return
 	}
 
-	if db.Db_name != "" {
-		fmt.Printf("%s\n", db.Db_name)
+	if db.DbName != "" {
+		fmt.Printf("%s\n", db.DbName)
 	} else {
 		fmt.Println("My Lists")
 	}
 
 	fmt.Println(strings.Repeat("-", 11+longestName+longestDate))
-	for i, l := range db.Db_lists {
-		if i == int(db.DB_CurrentList.Index) {
-			fmt.Printf("| %-*d | %-*s | %-*s |\n", 1, l.Index, longestName, "-> "+l.List_name, longestDate, l.Last_modified)
+	for i, l := range db.ListArr {
+		if i == int(db.ThisList.Index) {
+			fmt.Printf("| %-*d | %-*s | %-*s |\n", 1, l.Index, longestName, "-> "+l.ListName, longestDate, l.LastModified)
 		} else {
-			fmt.Printf("| %-*d | %-*s | %-*s |\n", 1, l.Index, longestName, l.List_name, longestDate, l.Last_modified)
+			fmt.Printf("| %-*d | %-*s | %-*s |\n", 1, l.Index, longestName, l.ListName, longestDate, l.LastModified)
 		}
 	}
 	fmt.Println(strings.Repeat("-", 11+longestName+longestDate))

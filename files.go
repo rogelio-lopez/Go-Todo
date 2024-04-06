@@ -62,17 +62,17 @@ func createDB() DB {
 		log.Fatalln("Scanning Error in createDB()")
 	}
 	return DB{
-		Db_name: scanner.Text(),
-		DB_CurrentList: CurrentList{
+		DbName: scanner.Text(),
+		ThisList: ThisList{
 			Name:  "New List",
 			Index: 0,
 		},
-		Db_lists: []List{
+		ListArr: []List{
 			{
-				Index:         0,
-				List_name:     "New List",
-				Last_modified: timestamp(),
-				List:          []Entry{},
+				Index:        0,
+				ListName:     "New List",
+				LastModified: timestamp(),
+				List:         []Entry{},
 			},
 		},
 	}

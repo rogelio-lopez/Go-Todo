@@ -25,8 +25,8 @@ func (list *List) shw() {
 		return
 	}
 
-	if list.List_name != "" {
-		fmt.Printf("%s's Todo\n", list.List_name)
+	if list.ListName != "" {
+		fmt.Printf("%s's Todo\n", list.ListName)
 	} else {
 		fmt.Println("My Todo")
 	}

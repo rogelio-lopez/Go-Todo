@@ -8,8 +8,8 @@ func main() {
 	var db DB = getFileJSON()
 
 	// WUse function to assign current list to a list value
-	listIndex := db.DB_CurrentList.Index
-	var currentList List = db.Db_lists[listIndex]
+	listIndex := db.ThisList.Index
+	var currentList List = db.ListArr[listIndex]
 	var entry Entry
 
 	args := os.Args

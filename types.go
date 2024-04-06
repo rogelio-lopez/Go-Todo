@@ -1,15 +1,15 @@
 package main
 
 type DB struct {
-	Db_name        string      `json:"Db_name"`
-	DB_CurrentList CurrentList `json:"DB_CurrentList"`
-	Db_lists       []List      `json:"Db_lists"`
+	DbName   string   `json:"DbName"`
+	ThisList ThisList `json:"ThisList"`
+	ListArr  []List   `json:"ListArr"`
 }
 type List struct {
-	Index         uint    `json:"index"`
-	List_name     string  `json:"List_name"`
-	Last_modified string  `json:"Last_modified"`
-	List          []Entry `json:"List"`
+	Index        uint    `json:"Index"`
+	ListName     string  `json:"ListName"`
+	LastModified string  `json:"LastModified"`
+	List         []Entry `json:"List"`
 }
 type Entry struct {
 	Index     uint   `json:"index"`
@@ -17,8 +17,7 @@ type Entry struct {
 	Date      string `json:"dateAdded"`
 	Important bool   `json:"important"`
 }
-
-type CurrentList struct {
+type ThisList struct {
 	Index uint   `json:"index"`
 	Name  string `json:"name"`
 }
