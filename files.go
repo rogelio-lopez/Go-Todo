@@ -31,6 +31,8 @@ func getFileJSON() DB {
 }
 
 func (db *DB) pushFileJSON() {
+	db.refreshIndexes()
+
 	listAsByte, err := json.MarshalIndent(db, "", "\t")
 	if err != nil {
 		log.Fatal(err)
@@ -38,6 +40,23 @@ func (db *DB) pushFileJSON() {
 	err = os.WriteFile("todo-db.json", listAsByte, 0644)
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func (db *DB) refreshIndexes() {
+	for i := 0; i < len(db.ListArr); i++ {
+		if db.ThisList.Index == db.ListArr[i].Index {
+			db.ThisList.Index = uint(i)
+		}
+
+		db.ListArr[i].Index = uint(i)
+
+		if len(db.ListArr[i].List) > 0 {
+
+			for j := 0; j < len(db.ListArr[i].List); j++ {
+				db.ListArr[i].List[j].Index = uint(j)
+			}
+		}
 	}
 }
 

@@ -8,19 +8,6 @@ import (
 	"strings"
 )
 
-// Change the name of the DB
-func (db *DB) changeDbName() {
-	fmt.Print("New DB name: ")
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	if scanner.Err() != nil {
-		log.Fatalf("Change DB name error: %s", scanner.Err())
-	}
-
-	db.DbName = scanner.Text()
-	db.pushFileJSON()
-}
-
 /*--- Checkout ---*/
 func (db *DB) checkout(args []string) {
 	if len(args) >= 3 {
@@ -40,7 +27,6 @@ func (db *DB) delList(args []string) {
 		var listName = argText(args[3:])
 
 		//Handle current list backup if deleted
-		//reassign indexes when deleting
 
 		for i, l := range db.ListArr {
 			if listName == l.ListName {
@@ -50,22 +36,22 @@ func (db *DB) delList(args []string) {
 
 				} else if i == 0 {
 					db.ListArr = db.ListArr[1:]
+
 				} else if i == len(db.ListArr) {
 					db.ListArr = db.ListArr[0 : len(db.ListArr)-1]
-				} else {
-					//delete list
-					first := db.ListArr[0:i]
-					fmt.Println(first)
-					second := db.ListArr[i+1:]
-					fmt.Println(second)
 
+				} else {
+					first := db.ListArr[0:i]
+					second := db.ListArr[i+1:]
 					db.ListArr = append(first, second...)
 				}
+
 			}
 		}
 	} else {
-		fmt.Println("Ya need to give me the name of the list to delte")
+		fmt.Println("Ya need to give me the name of the list to delete")
 	}
+	db.refreshIndexes()
 	db.pushFileJSON()
 }
 
@@ -133,4 +119,17 @@ func shwDB(db DB) {
 		}
 	}
 	fmt.Println(strings.Repeat("-", 11+longestName+longestDate))
+}
+
+// Change the name of the DB
+func (db *DB) changeDbName() {
+	fmt.Print("New DB name: ")
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	if scanner.Err() != nil {
+		log.Fatalf("Change DB name error: %s", scanner.Err())
+	}
+
+	db.DbName = scanner.Text()
+	db.pushFileJSON()
 }

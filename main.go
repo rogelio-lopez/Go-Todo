@@ -7,7 +7,7 @@ import (
 func main() {
 	var db DB = getFileJSON()
 
-	// WUse function to assign current list to a list value
+	// Use function to assign current list to a list value
 	listIndex := db.ThisList.Index
 	var currentList List = db.ListArr[listIndex]
 	var entry Entry
