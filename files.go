@@ -45,10 +45,6 @@ func (db *DB) pushFileJSON() {
 
 func (db *DB) refreshIndexes() {
 	for i := 0; i < len(db.ListArr); i++ {
-		if db.ThisList.Index == db.ListArr[i].Index {
-			db.ThisList.Index = uint(i)
-		}
-
 		db.ListArr[i].Index = uint(i)
 
 		if len(db.ListArr[i].List) > 0 {
@@ -82,16 +78,13 @@ func createDB() DB {
 	}
 	return DB{
 		DbName: scanner.Text(),
-		ThisList: ThisList{
-			Name:  "New List",
-			Index: 0,
-		},
 		ListArr: []List{
 			{
 				Index:        0,
 				ListName:     "New List",
 				LastModified: timestamp(),
 				List:         []Entry{},
+				SelectedList: true,
 			},
 		},
 	}
