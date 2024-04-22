@@ -28,7 +28,7 @@ func argText(args []string) string {
 // Check if db has a selected list
 func getSelectedListIndex(dbLists []List) int {
 	for i, l := range dbLists {
-		if l.SelectedList == true {
+		if l.SelectedList {
 			return i
 		}
 	}

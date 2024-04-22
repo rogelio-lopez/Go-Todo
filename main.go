@@ -11,7 +11,8 @@ func main() {
 	var db DB = getFileJSON()
 
 	// Use function to assign current list to a list value
-	var currentList List = db.ListArr[getSelectedListIndex(db.ListArr)]
+	var currentList *List = &db.ListArr[getSelectedListIndex(db.ListArr)]
+
 	var entry Entry
 
 	args := os.Args
@@ -42,6 +43,8 @@ func main() {
 		default:
 			printInstructions()
 		}
+		//db.pushFileJSON()
+
 	} else {
 		printInstructions()
 	}

@@ -4,7 +4,8 @@ import (
 	"fmt"
 )
 
-/*--- Checkout COntrols ---*/
+// Checkout Controls
+// add / del / switch lists
 func (db *DB) checkout(args []string) {
 	if len(args) >= 3 {
 		switch args[2] {
@@ -18,6 +19,7 @@ func (db *DB) checkout(args []string) {
 	}
 }
 
+// Delete List
 func (db *DB) delList(args []string) {
 	if len(args) >= 4 {
 		var listName = argText(args[3:])
@@ -43,7 +45,7 @@ func (db *DB) delList(args []string) {
 			}
 		}
 	} else {
-		fmt.Println("Ya need to give me the name of the list to delete")
+		fmt.Println("Ya need to give me the name of a list to delete")
 	}
 
 	if getSelectedListIndex(db.ListArr) < 0 && len(db.ListArr) > 0 {
@@ -53,34 +55,44 @@ func (db *DB) delList(args []string) {
 	db.pushFileJSON()
 }
 
+// Add List
 func (db *DB) addList(args []string) {
 	var listName string = argText(args[2:])
 
 	// Create new list if name != a list name
 	if db.changeThisList(listName) < 0 {
-		var newList List
-		newList.Index = uint(len(db.ListArr))
-		newList.ListName = listName
-		newList.LastModified = timestamp()
-		newList.List = []Entry{}
-		newList.SelectedList = true
-
+		db.allSelectedToFalse()
+		var newList List = List{
+			Index:        uint(len(db.ListArr)),
+			ListName:     listName,
+			LastModified: timestamp(),
+			List:         []Entry{},
+			SelectedList: true,
+		}
 		db.ListArr = append(db.ListArr, newList)
 		db.pushFileJSON()
 	}
 }
 
+// Switch to different list if name exists
 func (db *DB) changeThisList(listName string) int {
 	var found int = -1
-	for i, l := range db.ListArr {
-		if l.ListName == listName {
-			l.SelectedList = true
-			found = i
+	for i := 0; i < len(db.ListArr); i++ {
+		if db.ListArr[i].ListName == listName {
+			db.allSelectedToFalse()
+			db.ListArr[i].SelectedList = true
 			db.pushFileJSON()
-
+			found = i
 		} else {
-			l.SelectedList = false
+			db.ListArr[i].SelectedList = false
 		}
 	}
 	return found
+}
+
+// Update all "selectedList" to false
+func (db *DB) allSelectedToFalse() {
+	for i := 0; i < len(db.ListArr); i++ {
+		db.ListArr[i].SelectedList = false
+	}
 }

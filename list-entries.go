@@ -101,7 +101,7 @@ func (list *List) shwEntries() {
 	}
 
 	if list.ListName != "" {
-		fmt.Printf("%s's Todo\n", list.ListName)
+		fmt.Printf("%s\n", list.ListName)
 	} else {
 		fmt.Println("My Todo")
 	}
