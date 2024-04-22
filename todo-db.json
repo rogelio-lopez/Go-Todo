@@ -4,9 +4,23 @@
 		{
 			"Index": 0,
 			"ListName": "New List",
-			"LastModified": "Apr 22 05:35:18",
-			"List": [],
+			"LastModified": "Apr 22 05:40:22",
+			"List": [
+				{
+					"index": 0,
+					"todoItem": "This is a test entry in my new list",
+					"dateAdded": "Apr 22 05:41:59",
+					"important": false
+				}
+			],
 			"SelectedList": true
+		},
+		{
+			"Index": 1,
+			"ListName": "Todo List 2",
+			"LastModified": "Apr 22 05:40:56",
+			"List": [],
+			"SelectedList": false
 		}
 	]
 }

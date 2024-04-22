@@ -75,5 +75,6 @@ func shwDB(db DB) {
 
 // Print instructions
 func printInstructions() {
-	fmt.Println("Go-do Usage: ./godo [add] [del] [shw]")
+	fmt.Println("Lists: ./godo [checkout] [-d (delete)] [listname]")
+	fmt.Println("List Entries: ./godo [add] [ordr] [del] [shw]")
 }
