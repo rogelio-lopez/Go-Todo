@@ -1,6 +1,6 @@
 # Go Todo CLI
 
-<img alt="Screenshot of project" src="./screenshot.png" align="left"  width="350"/>
+<img alt="Screenshot of project" src="./screenshot.png" align="right"  width="350"/>
 
 ## Introduction
 
