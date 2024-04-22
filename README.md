@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Go Todo CLI is a simple, yet powerful command-line interface (CLI) application written in Go, designed to help you manage your daily tasks efficiently. This project aims to provide a straightforward and user-friendly way to add, delete, and view tasks from your command line.
+Go Todo CLI is a simple, yet powerful command-line interface (CLI) application written in Go, designed to help you manage your daily tasks efficiently. This project aims to provide a straightforward and user-friendly way to add, delete, and view tasks on multipple lists from your command line.
 
 ## Features
 
@@ -34,7 +34,18 @@ Go Todo CLI is a simple, yet powerful command-line interface (CLI) application w
    ```
 
 ### Usage
-
+- Change the name of the Database
+ ```
+ ./godo db-name
+ ```
+- Create a new list or switch to another list
+ ```
+ ./godo checkout [existing list/new list name]
+ ```
+- Delete a list
+ ```
+ ./godo checkout -d [list name]
+ ```
 - To add a new task:
  ```
  ./godo add Buy groceries
@@ -43,7 +54,7 @@ Go Todo CLI is a simple, yet powerful command-line interface (CLI) application w
  ```
  ./godo add -i Very important task to do
  ```
-- To delete a task:
+- To delete first task:
  ```
  ./godo del
  ```
@@ -58,10 +69,6 @@ Go Todo CLI is a simple, yet powerful command-line interface (CLI) application w
 - To order tasks by importance:
  ```
  ./godo ordr
- ```
-- To change the name of the Todo list:
- ```
- ./godo usr NewName
  ```
 
 ## Contributing
